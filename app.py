@@ -45,13 +45,9 @@ if authenticate_user():
 
         # Streamlit configuration
         st.set_page_config(page_title="Digital Image Processing")
-
-        # Title and description
         st.title("Rock Image Segmentation")
 
-        # File upload
         uploaded_file = st.file_uploader("Upload an image")
-
         refresh = st.button("Refresh")
 
 
@@ -62,17 +58,15 @@ if authenticate_user():
 
 
         if uploaded_file is not None or refresh:
-            # Load the uploaded image using PIL
+            
             image = None
             if uploaded_file is not None:
                 image = Image.open(uploaded_file)
 
-            # Display the uploaded image
             if image is not None:
                 st.image(image, caption="Uploaded Image", width=350)
 
             if uploaded_file is not None:
-                # Submit button
                 submit = st.button("Segment")
                 new = st.button("Remove boundary")
 
@@ -82,14 +76,10 @@ if authenticate_user():
                     numpy_image = np.array(image)
 
                     binary_image = main_3(numpy_image)
-
-                    # Convert binary image to PIL format
                     pil_binary_image = Image.fromarray(binary_image)
 
-                    # Display the binary image
                     st.image(pil_binary_image, width=350)
 
-                    # Download button for the binary image
                     with tempfile.NamedTemporaryFile(suffix=".png", delete=False) as temp_file:
                         pil_binary_image.save(temp_file.name)
                     st.markdown(f"<a href='data:file/png;base64,{base64.b64encode(open(temp_file.name, 'rb').read()).decode()}' download='No_boundary_image.png'>Download Image</a>", unsafe_allow_html=True)
@@ -110,11 +100,9 @@ if authenticate_user():
                 st.image(pil_image_2, caption="Image 2", width=350)
                 st.image(pil_image_3, caption="Image 3", width=350)
 
-                # Download buttons
                 st.markdown("### Download Binary Images")
 
                 with tempfile.TemporaryDirectory() as temp_dir:
-                    # Save binary images to temporary files
                     file_path_1 = os.path.join(temp_dir, "binary_image_1.png")
                     file_path_2 = os.path.join(temp_dir, "binary_image_2.png")
                     file_path_3 = os.path.join(temp_dir, "binary_image_3.png")
@@ -126,7 +114,6 @@ if authenticate_user():
                     pil_image_3.save(file_path_3)
                     np.save(file_path_labels, st.session_state.cluster_labels)
 
-                    # Generate download buttons for the temporary files
                     st.markdown(f"<a href='data:file/png;base64,{base64.b64encode(open(file_path_1, 'rb').read()).decode()}' download='Image_1.png'>Download Image 1</a>", unsafe_allow_html=True)
                     st.markdown(f"<a href='data:file/png;base64,{base64.b64encode(open(file_path_2, 'rb').read()).decode()}' download='Image_2.png'>Download Image 2</a>", unsafe_allow_html=True)
                     st.markdown(f"<a href='data:file/png;base64,{base64.b64encode(open(file_path_3, 'rb').read()).decode()}' download='Image_3.png'>Download Image 3</a>", unsafe_allow_html=True)
@@ -156,18 +143,14 @@ if authenticate_user():
 
                         rgb_image = bgr_image[:, :, ::-1]
 
-                        # Convert RGB image to uint8 data type
                         rgb_image = rgb_image.astype(np.uint8)
 
-                        # Create PIL image from RGB array
                         pil_rgb_image = Image.fromarray(rgb_image)
 
-                        # Display the RGB image on the main interface
                         st.image(pil_rgb_image, caption="Combined RGB Image", width=350)
 
-                        # Save the RGB image to a temporary file
                         with tempfile.NamedTemporaryFile(suffix=".png", delete=False) as temp_file:
                             pil_rgb_image.save(temp_file.name)
 
-                        # Generate download link for the RGB image on the main interface
                         st.markdown(f"<a href='data:file/png;base64,{base64.b64encode(open(temp_file.name, 'rb').read()).decode()}' download='combined_image.png'>Download Combined Image</a>", unsafe_allow_html=True)
+
