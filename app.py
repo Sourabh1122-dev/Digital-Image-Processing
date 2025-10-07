@@ -90,12 +90,10 @@ if authenticate_user():
 
             if len(st.session_state.binary_images) != 0:
 
-                # Convert binary images to PIL format
                 pil_image_1 = Image.fromarray(st.session_state.binary_images[0])
                 pil_image_2 = Image.fromarray(st.session_state.binary_images[1])
                 pil_image_3 = Image.fromarray(st.session_state.binary_images[2])
 
-                # Display the binary images
                 st.image(pil_image_1, caption="Image 1", width=350)
                 st.image(pil_image_2, caption="Image 2", width=350)
                 st.image(pil_image_3, caption="Image 3", width=350)
@@ -153,4 +151,5 @@ if authenticate_user():
                             pil_rgb_image.save(temp_file.name)
 
                         st.markdown(f"<a href='data:file/png;base64,{base64.b64encode(open(temp_file.name, 'rb').read()).decode()}' download='combined_image.png'>Download Combined Image</a>", unsafe_allow_html=True)
+
 
