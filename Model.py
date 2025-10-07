@@ -7,18 +7,14 @@ def main_1(img):
 
   def increase_constrast(image):
 
-    # converting to LAB color space
     lab = cv2.cvtColor(image, cv2.COLOR_BGR2LAB)
     l_channel, a, b = cv2.split(lab)
 
-    # Applying CLAHE to L-channel
     clahe = cv2.createCLAHE(clipLimit=4.0, tileGridSize=(8, 8))
     cl = clahe.apply(l_channel)
 
-    # merge the CLAHE enhanced L-channel with the a and b channel
     limg = cv2.merge((cl, a, b))
 
-    # Converting image from LAB Color model to BGR color spcae
     enhanced_img = cv2.cvtColor(limg, cv2.COLOR_LAB2BGR)
 
     return enhanced_img
@@ -48,9 +44,9 @@ def main_1(img):
 
   image = np.reshape(image, (image_width * image_height, channels))
 
-  num_clusters = 3  # Adjust the number of clusters as desired
-  m = 1.5  # Fuzziness parameter, adjust as desired
-  error = 0.0001  # Convergence threshold, adjust as desired
+  num_clusters = 3 
+  m = 1.5  
+  error = 0.0001  
   max_iter = 300
 
   cntr, u, u0, d, jm, p, fpc = fuzz.cluster.cmeans(image.T, num_clusters, m, error, max_iter, seed=0)
