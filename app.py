@@ -45,7 +45,7 @@ if authenticate_user():
 
         # Streamlit configuration
         st.set_page_config(page_title="Digital Image Processing")
-        st.title("Rock Image Segmentation")
+        st.title("Multi-Phase Segmentation")
 
         uploaded_file = st.file_uploader("Upload an image")
         refresh = st.button("Refresh")
@@ -151,5 +151,6 @@ if authenticate_user():
                             pil_rgb_image.save(temp_file.name)
 
                         st.markdown(f"<a href='data:file/png;base64,{base64.b64encode(open(temp_file.name, 'rb').read()).decode()}' download='combined_image.png'>Download Combined Image</a>", unsafe_allow_html=True)
+
 
 
